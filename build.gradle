@@ -12,6 +12,7 @@ buildscript {
         classpath ProjectPluginManager.AndroidToolsPlugin
         classpath ProjectPluginManager.KotlinPlugin
         classpath ProjectPluginManager.HiltPlugin
+        classpath ProjectPluginManager.ARouterRegister
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
     }
 }
