@@ -14,7 +14,7 @@ object ProjectBuildConfig {
     const val targetSdkVersion = 30
     const val versionCode = 1
     const val versionName = "0.0.1"
-    const val isAppMode = false
+    const val isAppMode = true
 
     /**
      * 项目当前的版本状态

@@ -10,7 +10,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
-class BaseApplication :MultiDexApplication() {
+open class BaseApplication :MultiDexApplication() {
 
     private val mCoroutineScope by lazy { MainScope() }
     private val mLoadModuleProxy by lazy { LoadModuleProxy() }
