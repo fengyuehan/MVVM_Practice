@@ -15,5 +15,7 @@ class AppApplication: BaseApplication() {
 //            .addIndex(MainEventIndex())
             .installDefaultEventBus()
         super.onCreate()
+
+
     }
 }

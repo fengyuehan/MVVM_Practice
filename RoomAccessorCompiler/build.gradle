@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'kotlin-kapt'
+}
+
+import com.example.versionplugin.*
+
+dependencies{
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation DependencyConfig.Kotlin.Kotlin_jdk7
+    //这个版本JavaVersion必须是1.8不然会报错
+    implementation DependencyConfig.GitHub.kotlinpoet
+
+    kapt DependencyConfig.GitHub.AutoServiceAnnotations
+    compileOnly DependencyConfig.GitHub.AutoServiceAnnotations
+
+    implementation DependencyConfig.JetPack.Room
+    kapt DependencyConfig.JetPack.RoomCompiler
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

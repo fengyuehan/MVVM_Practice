@@ -1,28 +1,50 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-import com.example.buildsrc.*
+import com.example.versionplugin.*
 
 buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://maven.google.com' }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        mavenLocal()
         maven { url 'https://www.jitpack.io' }
+        maven {
+            url 'https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api'
+        }
     }
     dependencies {
-        classpath ProjectPluginManager.AndroidToolsPlugin
-        classpath ProjectPluginManager.KotlinPlugin
-        classpath ProjectPluginManager.HiltPlugin
-        classpath ProjectPluginManager.ARouterRegister
+        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.35.1"
+        classpath "com.alibaba:arouter-register:1.0.2"
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
     }
 }
+
+/**
+ * 如果在多项目构建中，可能想把插件应用到子项目中，apply false 来告诉 Gradle 不要应用插件
+ *
+ * plugins {} 默认的行为是解析和应用插件
+ */
+plugins {
+    // 这个 id 就是在 versionPlugin 文件夹下 build.gradle 文件内定义的id
+    id "com.example.versionplugin" apply false
+}
+
+
+
+
+
 
 allprojects {
     repositories {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://www.jitpack.io' }
+        mavenLocal()
     }
 }
 

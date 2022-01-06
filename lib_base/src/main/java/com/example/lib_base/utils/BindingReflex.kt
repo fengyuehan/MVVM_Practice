@@ -29,7 +29,7 @@ object BindingReflex {
                     return inflate.invoke(null, from) as V
                 }
             }
-            return reflexViewBinding<V>(aClass.superclass, from)
+            return reflexViewBinding<V>(aClass.superclass as Class<*>, from)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -69,7 +69,7 @@ object BindingReflex {
                     return inflate.invoke(null, from, viewGroup, b) as V
                 }
             }
-            return reflexViewBinding<ViewBinding>(aClass.superclass, from, viewGroup, b) as V
+            return reflexViewBinding<ViewBinding>(aClass.superclass as Class<*>, from, viewGroup, b) as V
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
@@ -103,7 +103,7 @@ object BindingReflex {
                     return ViewModelProvider(owner)[tClass as Class<VM>]
                 }
             }
-            return reflexViewModel<VM>(aClass.superclass, owner)
+            return reflexViewModel<VM>(aClass.superclass as Class<*>, owner)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -135,7 +135,7 @@ object BindingReflex {
                     return ViewModelProvider(fragment.requireActivity())[tClass as Class<VM>]
                 }
             }
-            return reflexViewModelShared<VM>(aClass.superclass, fragment)
+            return reflexViewModelShared<VM>(aClass.superclass as Class<*>, fragment)
         } catch (e: Exception) {
             e.printStackTrace()
         }

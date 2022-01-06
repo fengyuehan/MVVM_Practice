@@ -2,7 +2,7 @@
 //********* lib 模块的公共脚本配置 **********
 //****************************************
 
-import com.example.buildsrc.*
+import com.example.versionplugin.*
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -10,14 +10,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdkVersion ProjectBuildConfig.compileSdkVersion
-    buildToolsVersion ProjectBuildConfig.buildToolsVersion
+    compileSdkVersion ProjectBuildConfigs.compileSdkVersion
+    buildToolsVersion ProjectBuildConfigs.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion ProjectBuildConfig.minSdkVersion
-        targetSdkVersion ProjectBuildConfig.targetSdkVersion
-        versionCode ProjectBuildConfig.versionCode
-        versionName ProjectBuildConfig.versionName
+        minSdkVersion ProjectBuildConfigs.minSdkVersion
+        targetSdkVersion ProjectBuildConfigs.targetSdkVersion
+        versionCode ProjectBuildConfigs.versionCode
+        versionName ProjectBuildConfigs.versionName
 
         consumerProguardFiles "consumer-rules.pro"
 
@@ -40,17 +40,17 @@ android {
     buildTypes {
         // 对应 ALPHA 版本
         debug {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.ALPHA}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.ALPHA}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         beta {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.BETA}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.BETA}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.RELEASE}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.RELEASE}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

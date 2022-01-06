@@ -1,15 +1,72 @@
-import com.example.buildsrc.*
+import com.example.versionplugin.*
 
-apply from: '../base_lib.gradle'
+//apply from: '../base_lib.gradle'
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
+    compileSdkVersion ProjectBuildConfigs.compileSdkVersion
+    buildToolsVersion ProjectBuildConfigs.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion ProjectBuildConfigs.minSdkVersion
+        targetSdkVersion ProjectBuildConfigs.targetSdkVersion
+        versionCode ProjectBuildConfigs.versionCode
+        versionName ProjectBuildConfigs.versionName
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        ndk {
+            // 设置支持的SO库架构
+            //abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     buildFeatures {
         viewBinding = true
     }
 
     resourcePrefix "base_"
+
+    buildTypes {
+        // 对应 ALPHA 版本
+        debug {
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.ALPHA}\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        beta {
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.BETA}\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.RELEASE}\""
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])

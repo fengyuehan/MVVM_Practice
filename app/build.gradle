@@ -1,22 +1,23 @@
 
-import com.example.buildsrc.*
+import com.example.versionplugin.*
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.alibaba.arouter'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdkVersion ProjectBuildConfig.compileSdkVersion
-    buildToolsVersion ProjectBuildConfig.buildToolsVersion
+    compileSdkVersion ProjectBuildConfigs.compileSdkVersion
+    buildToolsVersion ProjectBuildConfigs.buildToolsVersion
 
     defaultConfig {
-        applicationId ProjectBuildConfig.applicationId
-        minSdkVersion ProjectBuildConfig.minSdkVersion
-        targetSdkVersion ProjectBuildConfig.targetSdkVersion
-        versionCode ProjectBuildConfig.versionCode
-        versionName ProjectBuildConfig.versionName
+        applicationId ProjectBuildConfigs.applicationId
+        minSdkVersion ProjectBuildConfigs.minSdkVersion
+        targetSdkVersion ProjectBuildConfigs.targetSdkVersion
+        versionCode ProjectBuildConfigs.versionCode
+        versionName ProjectBuildConfigs.versionName
         testInstrumentationRunner DependencyConfig.AndroidX.AndroidJUnitRunner
         multiDexKeepProguard file("multidexKeep.pro")
 
@@ -25,24 +26,32 @@ android {
             //abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ROOM_ACCESSOR_NAME_PREFIX: "AppModule"]
+            }
+        }
+
+
     }
 
     buildTypes {
         // 对应 ALPHA 版本
         debug {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.ALPHA}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.ALPHA}\""
 //            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         beta {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.BETA}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.BETA}\""
 //            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfig.Version.RELEASE}\""
+            buildConfigField "String", "VERSION_TYPE", "\"${ProjectBuildConfigs.Version.RELEASE}\""
 //            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -53,9 +62,9 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (outputFileName != null && outputFileName.endsWith('.apk')) {
-                outputFileName = "${ProjectBuildConfig.applicationId}" +
-                        "_${ProjectBuildConfig.versionCode}" +
-                        "(${ProjectBuildConfig.versionName})" +
+                outputFileName = "${ProjectBuildConfigs.applicationId}" +
+                        "_${ProjectBuildConfigs.versionCode}" +
+                        "(${ProjectBuildConfigs.versionName})" +
                         "_${variant.buildType.name}" +
                         ".apk"
             }
@@ -74,17 +83,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
-    if (!ProjectBuildConfig.isAppMode) {
-        /*implementation project(path: ':module_main')
-        implementation project(path: ':module_home')
-        implementation project(path: ':module_subscribe_account')
-        implementation project(path: ':module_me')*/
+    if (!ProjectBuildConfigs.isAppMode) {
+        implementation project(path: ':accountmodule')
     } else {
         implementation project(path: ':lib_common')
     }
+    kapt project(':RoomAccessorCompiler')
+
     implementation DependencyConfig.JetPack.HiltCore
-    kapt DependencyConfig.GitHub.AutoServiceAnnotations
+
+    //kapt DependencyConfig.GitHub.AutoServiceAnnotations
     kapt DependencyConfig.JetPack.HiltApt
     kapt DependencyConfig.JetPack.HiltAndroidx
+    kapt DependencyConfig.JetPack.RoomCompiler
+    api DependencyConfig.JetPack.Room
 }
