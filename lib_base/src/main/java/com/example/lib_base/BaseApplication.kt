@@ -3,6 +3,7 @@ package com.example.lib_base
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope

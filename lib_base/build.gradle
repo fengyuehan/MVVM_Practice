@@ -1,7 +1,5 @@
 import com.example.versionplugin.*
 
-//apply from: '../base_lib.gradle'
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -39,7 +37,19 @@ android {
         viewBinding = true
     }
 
-    resourcePrefix "base_"
+    /*javaCompileOptions {
+        annotationProcessorOptions {
+            arguments += ["AROUTER_MODULE_NAME": project.getName()]
+        }
+    }*/
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
+
+    //resourcePrefix "base_"
 
     buildTypes {
         // 对应 ALPHA 版本
@@ -61,11 +71,7 @@ android {
     }
 }
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
-}
+
 
 
 dependencies {

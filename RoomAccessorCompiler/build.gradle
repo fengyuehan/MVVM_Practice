@@ -8,18 +8,16 @@ import com.example.versionplugin.*
 
 dependencies{
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation DependencyConfig.Kotlin.Kotlin_jdk7
-    //这个版本JavaVersion必须是1.8不然会报错
-    implementation DependencyConfig.GitHub.kotlinpoet
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+    kapt 'com.google.auto.service:auto-service:1.0-rc5'
+    compileOnly 'com.google.auto.service:auto-service:1.0-rc5'
 
-    kapt DependencyConfig.GitHub.AutoServiceAnnotations
-    compileOnly DependencyConfig.GitHub.AutoServiceAnnotations
+    implementation 'com.squareup:kotlinpoet:1.7.2'
 
-    implementation DependencyConfig.JetPack.Room
-    kapt DependencyConfig.JetPack.RoomCompiler
+    def room_version = '2.2.2'
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

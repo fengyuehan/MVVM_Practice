@@ -45,13 +45,13 @@ class RoomAccessorProcessor :AbstractProcessor(){
             throw IllegalArgumentException()
         }
 
-        println(" ----------- AutoRoomAccessorProcessor ----------- ")
+        println(" ----------- RoomAccessorProcessor ----------- ")
         println(" ----------- className = $className ----------- ")
     }
 
 
     override fun process(
-        annotations: MutableSet<out TypeElement>,
+        set: Set<TypeElement?>,
         roundEnv: RoundEnvironment
     ): Boolean {
         if (generated || filer == null) {

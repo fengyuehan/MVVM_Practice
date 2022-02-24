@@ -20,6 +20,7 @@ android {
         versionName ProjectBuildConfigs.versionName
         testInstrumentationRunner DependencyConfig.AndroidX.AndroidJUnitRunner
         multiDexKeepProguard file("multidexKeep.pro")
+        multiDexEnabled true
 
         ndk {
             // 设置支持的SO库架构
@@ -29,7 +30,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ROOM_ACCESSOR_NAME_PREFIX: "AppModule"]
+                arguments += [ROOM_ACCESSOR_NAME_PREFIX: "AppModule"]
             }
         }
 
@@ -84,17 +85,17 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     if (!ProjectBuildConfigs.isAppMode) {
-        implementation project(path: ':accountmodule')
+        //implementation project(path: ':accountmodule')
     } else {
         implementation project(path: ':lib_common')
     }
     kapt project(':RoomAccessorCompiler')
-
+    implementation project(path: ':accountmodule')
     implementation DependencyConfig.JetPack.HiltCore
 
     //kapt DependencyConfig.GitHub.AutoServiceAnnotations
     kapt DependencyConfig.JetPack.HiltApt
     kapt DependencyConfig.JetPack.HiltAndroidx
     kapt DependencyConfig.JetPack.RoomCompiler
-    api DependencyConfig.JetPack.Room
+    implementation DependencyConfig.JetPack.Room
 }

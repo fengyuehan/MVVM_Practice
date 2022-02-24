@@ -43,8 +43,18 @@ android {
         resValue "string", "BUGLY_APP_ID", SDKKeyConfig.BUGLY_APP_ID
     }
 
+    /*javaCompileOptions {
+        annotationProcessorOptions {
+            arguments += ["AROUTER_MODULE_NAME": project.getName()]
+        }
+    }*/
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
 
-    resourcePrefix "common_"
+    //resourcePrefix "common_"
 
     buildTypes {
         // 对应 ALPHA 版本
@@ -66,11 +76,7 @@ android {
     }
 }
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
-}
+
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])

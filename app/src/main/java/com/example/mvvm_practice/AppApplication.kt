@@ -1,5 +1,9 @@
 package com.example.mvvm_practice
 
+import android.content.Context
+import androidx.multidex.MultiDex
+import com.example.accountmodule.AccountModuleRoomAccessor
+import com.example.accountmodule.UserDao
 import com.example.lib_base.BaseApplication
 import com.example.lib_common.CommonApplication
 import dagger.hilt.android.HiltAndroidApp
@@ -15,6 +19,13 @@ class AppApplication: BaseApplication() {
 //            .addIndex(MainEventIndex())
             .installDefaultEventBus()
         super.onCreate()
+
+        AccountModuleRoomAccessor.onGetDaoCallback = object :AccountModuleRoomAccessor.OnGetDaoCallback{
+            override fun onGetUserDao(): UserDao {
+                return DBHelper.db.userDao()
+            }
+
+        }
 
 
     }
