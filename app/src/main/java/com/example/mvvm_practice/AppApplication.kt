@@ -1,11 +1,7 @@
 package com.example.mvvm_practice
 
-import android.content.Context
-import androidx.multidex.MultiDex
-import com.example.accountmodule.AccountModuleRoomAccessor
-import com.example.accountmodule.UserDao
+import com.example.accountmodule.*
 import com.example.lib_base.BaseApplication
-import com.example.lib_common.CommonApplication
 import dagger.hilt.android.HiltAndroidApp
 import org.greenrobot.eventbus.EventBus
 
@@ -21,6 +17,22 @@ class AppApplication: BaseApplication() {
         super.onCreate()
 
         AccountModuleRoomAccessor.onGetDaoCallback = object :AccountModuleRoomAccessor.OnGetDaoCallback{
+            override fun onGetCatDao(): CatDao {
+                return DBHelper.db.getCat()
+            }
+
+            override fun onGetDogDao(): DogDao {
+                return DBHelper.db.getDog()
+            }
+
+            override fun onGetDogsAndOwnersDao(): DogsAndOwnersDao {
+                return DBHelper.db.getDao()
+            }
+
+            override fun onGetOwnerDao(): OwnerDao {
+                return DBHelper.db.getOwen()
+            }
+
             override fun onGetUserDao(): UserDao {
                 return DBHelper.db.userDao()
             }

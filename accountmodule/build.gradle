@@ -40,7 +40,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ROOM_ACCESSOR_NAME_PREFIX: "AccountModule"]
+                arguments += [ROOM_ACCESSOR_NAME_PREFIX: "AccountModule"]
             }
         }
 
@@ -122,7 +122,15 @@ dependencies {
     kapt DependencyConfig.JetPack.HiltApt
     kapt DependencyConfig.JetPack.HiltAndroidx
     kapt DependencyConfig.JetPack.LifecycleCompilerAPT
-    implementation DependencyConfig.JetPack.Room
-    kapt DependencyConfig.JetPack.Room
+    //implementation DependencyConfig.JetPack.Room
+    //kapt DependencyConfig.JetPack.Room
     kapt project(':RoomAccessorCompiler')
+    //Room的依赖引用
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    androidTestImplementation "androidx.room:room-testing:2.2.5"
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+
 }
